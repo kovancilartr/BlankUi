@@ -1,4 +1,5 @@
-import { role } from "@/lib/data";
+import { SignOutButton } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -98,7 +99,7 @@ const menuItems = [
       {
         icon: "/profile.png",
         label: "Profile",
-        href: "/profile",
+        href: "/user-profile",
         visible: ["admin", "teacher", "student", "parent"],
       },
       {
@@ -107,17 +108,13 @@ const menuItems = [
         href: "/settings",
         visible: ["admin", "teacher", "student", "parent"],
       },
-      {
-        icon: "/logout.png",
-        label: "Logout",
-        href: "/logout",
-        visible: ["admin", "teacher", "student", "parent"],
-      },
     ],
   },
 ];
 
-const Menu = () => {
+const Menu = async () => {
+  const user = await currentUser();
+  const role = user?.publicMetadata.role as string;
   return (
     <div className="mt-4 text-sm">
       {menuItems.map((i) => (
@@ -141,6 +138,12 @@ const Menu = () => {
           })}
         </div>
       ))}
+      <SignOutButton>
+        <div className="flex items-center justify-center lg:justify-start gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-lamaSkyLight cursor-pointer my-2">
+          <Image src="/logout.png" alt="" width={20} height={20} />
+          <span className="hidden lg:block">Çıkış Yap</span>
+        </div>
+      </SignOutButton>
     </div>
   );
 };

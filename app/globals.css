@@ -175,3 +175,11 @@ body {
   color: gray !important;
   margin-bottom: 5px;
 }
+
+/* Clerk İstemediğim yerleri göstermiyorum */
+.cl-internal-df7v37 {
+  display: none !important;
+}
+.cl-internal-1hp5nqm {
+  display: none !important;
+}
